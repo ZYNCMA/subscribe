@@ -35,12 +35,14 @@ class Handle(object):
         try:
             webData = web.data()
             print "Handle Post webdata is ", webData
-            recMsg = receive.parse_xml(webData)
-            if isinstance(recMsg, receive.Msg):
-                toUser = recMsg.FromUserName
-                fromUser = recMsg.ToUserName
-                replyMsg = reply.Msg()
 
+            recMsg = receive.parse_xml(webData)
+
+            toUser = recMsg.FromUserName
+            fromUser = recMsg.ToUserName
+            replyMsg = reply.TextMsg(toUser, fromUser, 'I cannot recognize')
+
+            if isinstance(recMsg, receive.Msg):
                 if recMsg.MsgType == 'text':
                     content = recMsg.Content
                     replyMsg = reply.TextMsg(toUser, fromUser, content)
@@ -49,9 +51,19 @@ class Handle(object):
                     replyMsg = reply.ImageMsg(toUser, fromUser, mediaId)
                 else:
                     pass
-
-                return replyMsg.send()
+            elif isinstance(recMsg, receive.EventMsg):
+                if recMsg.EventKey == 'CLICK':
+                    if recMsg.EventKey == 'me':
+                        replyMsg = reply.TextMsg(toUser, fromUser, 'see you soon')
+                    elif recMsg.EventKey == 'you':
+                        replyMsg = reply.TextMsg(toUser, fromUser, 'of course yes')
+                    else:
+                        pass
+                else:
+                    pass
             else:
-                return reply.Msg().send()
+                pass
+
+            return replyMsg.send()
         except Exception, e:
             return e
