@@ -5,6 +5,12 @@ import hashlib
 import web
 import receive
 import reply
+import blacklist
+
+from basic import Basic
+GBASIC = Basic()
+
+WHITELIST = ['xxx']
 
 class Handle(object):
     def GET(self):
@@ -52,13 +58,19 @@ class Handle(object):
                 else:
                     pass
             elif isinstance(recMsg, receive.EventMsg):
-                if recMsg.EventKey == 'CLICK':
+                if recMsg.Event == 'CLICK':
                     if recMsg.EventKey == 'me':
                         replyMsg = reply.TextMsg(toUser, fromUser, 'see you soon')
                     elif recMsg.EventKey == 'you':
                         replyMsg = reply.TextMsg(toUser, fromUser, 'of course yes')
                     else:
                         pass
+                elif recMsg.Event == 'subscribe':
+                    if toUser not in WHITELIST:
+                        blacklist.Blacklist().add(GBASIC.get_access_token())
+                        replyMsg = reply.TextMsg(toUser, fromUser, 'this is not for you, and you have been added to blacklist, please unsubscribe :)')
+                    else:
+                        replyMsg = reply.TextMsg(toUser, fromUser, 'nice to meet you :)')
                 else:
                     pass
             else:

@@ -28,6 +28,7 @@ def parse_xml(web_data):
             pass
         else:
             pass
+        return EventMsg(xmlData)
     else:
         pass
 
