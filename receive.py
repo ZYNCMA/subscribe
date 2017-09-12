@@ -11,6 +11,8 @@ def parse_xml(web_data):
         return TextMsg(xmlData)
     elif msg_type == 'image':
         return ImageMsg(xmlData)
+    else:
+        return Msg(xmlData)
 
 class Msg(object):
     def __init__(self, xmlData):

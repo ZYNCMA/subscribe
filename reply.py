@@ -35,6 +35,7 @@ class ImageMsg(Msg):
         self.__dict['FromUserName'] = fromUserName
         self.__dict['CreateTime'] = int(time.time())
         self.__dict['MediaId'] = mediaId
+
     def send(self):
         XmlForm = """
         <xml>

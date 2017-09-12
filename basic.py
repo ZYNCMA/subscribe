@@ -8,6 +8,7 @@ class Basic:
     def __init__(self):
         self.__accessToken = ''
         self.__leftTime = 0
+
     def __real_get_access_token(self):
         appId = "xxxxx"
         appSecret = "xxxxx"

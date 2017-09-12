@@ -23,7 +23,6 @@ class Menu(object):
         urlResp = urllib.urlopen(url=postUrl)
         print urlResp.read()
         
-    #获取自定义菜单配置接口
     def get_current_selfmenu_info(self, accessToken):
         postUrl = "https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=%s" % accessToken
         urlResp = urllib.urlopen(url=postUrl)
@@ -37,33 +36,17 @@ if __name__ == '__main__':
         [
             {
                 "type": "click",
-                "name": "开发指引",
-                "key":  "mpGuide"
+                "name": "miss u",
+                "key":  "me"
             },
             {
-                "name": "公众平台",
-                "sub_button":
-                [
-                    {
-                        "type": "view",
-                        "name": "更新公告",
-                        "url": "http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1418702138&token=&lang=zh_CN"
-                    },
-                    {
-                        "type": "view",
-                        "name": "接口权限说明",
-                        "url": "http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1418702138&token=&lang=zh_CN"
-                    },
-                    {
-                        "type": "view",
-                        "name": "返回码说明",
-                        "url": "http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433747234&token=&lang=zh_CN"
-                    }
-                ]
+                "type": "click",
+                "name": "miss me?",
+                "key":  "you"
             },
             {
                 "type": "media_id",
-                "name": "旅行",
+                "name": "contact",
                 "media_id": "z2zOokJvlzCXXNhSjF46gdx6rSghwX2xOD5GUV9nbX4"
             }
           ]

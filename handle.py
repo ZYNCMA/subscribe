@@ -16,7 +16,7 @@ class Handle(object):
             timestamp = data.timestamp
             nonce = data.nonce
             echostr = data.echostr
-            token = "xxx" #请按照公众平台官网\基本配置中信息填写
+            token = "xxx"
 
             list = [token, timestamp, nonce]
             list.sort()
@@ -34,7 +34,7 @@ class Handle(object):
     def POST(self):
         try:
             webData = web.data()
-            print "Handle Post webdata is ", webData   #后台打日志
+            print "Handle Post webdata is ", webData
             recMsg = receive.parse_xml(webData)
             if isinstance(recMsg, receive.Msg):
                 toUser = recMsg.FromUserName
@@ -52,7 +52,6 @@ class Handle(object):
 
                 return replyMsg.send()
             else:
-                print "暂且不处理"
                 return reply.Msg().send()
-        except Exception, Argment:
-            return Argment
+        except Exception, e:
+            return e

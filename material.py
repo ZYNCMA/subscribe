@@ -9,7 +9,7 @@ from basic import Basic
 class Material(object):
     def __init__(self):
         register_openers()
-    #上传
+
     def uplaod(self, accessToken, filePath, mediaType):
         openFile = open(filePath, "rb")
         fileName = "hello"
@@ -21,8 +21,8 @@ class Material(object):
         request = urllib2.Request(postUrl, postData, postHeaders)
         urlResp = urllib2.urlopen(request)
         print urlResp.read()
-    #下载
-    def get(self, accessToken, mediaId):
+
+    def get(self, accessToken, mediaId, localPath):
         postUrl = "https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=%s" % accessToken
         postData = "{ \"media_id\": \"%s\" }" % mediaId
         urlResp = urllib2.urlopen(postUrl, postData)
@@ -31,18 +31,18 @@ class Material(object):
             jsonDict = json.loads(urlResp.read())
             print jsonDict
         else:
-            buffer = urlResp.read()  # 素材的二进制
-            mediaFile = file("test_media.jpg", "wb")
+            buffer = urlResp.read()
+            mediaFile = file(localPath, "wb")
             mediaFile.write(buffer)
             print "get successful"
-    #删除
+
     def delete(self, accessToken, mediaId):
         postUrl = "https://api.weixin.qq.com/cgi-bin/material/del_material?access_token=%s" % accessToken
         postData = "{ \"media_id\": \"%s\" }" % mediaId
         urlResp = urllib2.urlopen(postUrl, postData)
         print urlResp.read()
     
-    #获取素材列表
+
     def batch_get(self, accessToken, mediaType, offset=0, count=20):
         postUrl = ("https://api.weixin.qq.com/cgi-bin/material"
                "/batchget_material?access_token=%s" % accessToken)
