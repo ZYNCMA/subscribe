@@ -10,7 +10,7 @@ class Material(object):
     def __init__(self):
         register_openers()
 
-    def uplaod(self, accessToken, filePath, mediaType):
+    def add(self, accessToken, filePath, mediaType):
         openFile = open(filePath, "rb")
         fileName = "hello"
         param = {'media': openFile, 'filename': fileName}
@@ -36,20 +36,28 @@ class Material(object):
             mediaFile.write(buffer)
             print "get successful"
 
-    def delete(self, accessToken, mediaId):
+    def del(self, accessToken, mediaId):
         postUrl = "https://api.weixin.qq.com/cgi-bin/material/del_material?access_token=%s" % accessToken
         postData = "{ \"media_id\": \"%s\" }" % mediaId
         urlResp = urllib2.urlopen(postUrl, postData)
         print urlResp.read()
     
 
-    def batch_get(self, accessToken, mediaType, offset=0, count=20):
-        postUrl = ("https://api.weixin.qq.com/cgi-bin/material"
-               "/batchget_material?access_token=%s" % accessToken)
-        postData = ("{ \"type\": \"%s\", \"offset\": %d, \"count\": %d }"
-                    % (mediaType, offset, count))
+    def get_count(self, accessToken):
+        postUrl = "https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token=%s" % accessToken
+        postData = ""
         urlResp = urllib2.urlopen(postUrl, postData)
-        print urlResp.read()
+        rst = urlResp.read()
+        print rst
+        return json.loads(rst)
+
+    def batch_get(self, accessToken, mediaType, offset=0, count=1):
+        postUrl = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=%s" % accessToken
+        postData = "{ \"type\": \"%s\", \"offset\": %d, \"count\": %d }" % (mediaType, offset, count)
+        urlResp = urllib2.urlopen(postUrl, postData)
+        rst = urlResp.read()
+        print rst
+        return json.loads(rst)
 
 if __name__ == '__main__':
     myMaterial = Material()

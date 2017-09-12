@@ -6,6 +6,8 @@ import web
 import receive
 import reply
 import blacklist
+import material
+import random
 
 from basic import Basic
 GBASIC = Basic()
@@ -60,7 +62,10 @@ class Handle(object):
             elif isinstance(recMsg, receive.EventMsg):
                 if recMsg.Event == 'CLICK':
                     if recMsg.EventKey == 'me':
-                        replyMsg = reply.TextMsg(toUser, fromUser, 'see you soon')
+                        mat = material.Material()
+                        imageCount = mat.get_count(GBASIC.get_access_token())['image_count']
+                        image = mat.batch_get(GBASIC.get_access_token(), 'image', random.randint(0, imageCount), 1)
+                        replyMsg = reply.ImageMsg(toUser, fromUser, image['item'][0]['media_id'])
                     elif recMsg.EventKey == 'you':
                         replyMsg = reply.TextMsg(toUser, fromUser, 'of course yes')
                     else:
